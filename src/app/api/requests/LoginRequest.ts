@@ -1,5 +1,5 @@
+import {ModelosRequest} from './ModelosRequest';
 
-// @ts-ignore
 export class LoginRequest implements ModelosRequest {
     public email: string;
     public password: string;

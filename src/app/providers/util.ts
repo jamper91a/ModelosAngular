@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {LoadingModalComponent} from '../util/modal/loading-modal/loading-modal.component';
 
 /**
  * Created by Usuario on 02/06/2017.
@@ -8,7 +10,8 @@ import {environment} from '../../environments/environment';
 @Injectable()
 export class Util {
   constructor(
-    public router: Router
+    public router: Router,
+    public dialog: MatDialog
   ) {
       this.url = environment.url;
       this.apiPrefix = environment.apiPrefix;
@@ -44,15 +47,25 @@ export class Util {
 
   }
 
-  public showDialog(msg: string, showDialog = true): void {
-    // const loading = await this.loadingCtrl.create({
-    //     message: msg,
-    //     keyboardClose: false
-    // });
-    // if (showDialog) {
-    //     await loading.present();
-    // }
-    // return loading;
+  public showDialog(msg: string, showDialog = true): MatDialogRef<any> {
+    let dialogRef = null;
+
+
+
+    if (showDialog) {
+      dialogRef = this.dialog.open(LoadingModalComponent, {
+        data: {
+          title: 'Loading',
+          message: 'Message',
+          keyboardClose: false
+        },
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
+    return dialogRef;
 
   }
 
