@@ -7,7 +7,7 @@ import {CrearAnfitrionRequest} from '../requests/anfitriones/CrearAnfitrionReque
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AnfitrionesService {
 
   constructor(
       private util: Util,
@@ -18,15 +18,15 @@ export class UserService {
 
   public async crearAnfitrion(request: CrearAnfitrionRequest): Promise<any> {
     const self = this;
-    const dialog = await this.util.showDialog('Logging', true);
+    // const dialog = await this.util.showDialog('Logging', true);
     try {
       // @ts-ignore
       const response: LoginResponse = await this.api.post('anfitriones', request.getBody()).toPromise();
-      await dialog.close();
+      // await dialog.close();
       // @ts-ignore
       return response;
     } catch (e) {
-      await dialog.close();
+      // await dialog.close();
       // self.util.showToast('Email / password does not match');
       throw e;
     }
