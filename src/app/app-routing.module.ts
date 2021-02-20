@@ -3,12 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () => import('./pages/public/public.module').then(m => m.PublicModule)
+  },
+  {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'anfitriones',
-    loadChildren: () => import('./anfitriones/anfitriones.module').then(m => m.AnfitrionesModule)
+    loadChildren: () => import('./pages/anfitriones/anfitriones.module').then(m => m.AnfitrionesModule)
   }
 ];
 

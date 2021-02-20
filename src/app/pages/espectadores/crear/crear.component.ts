@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest} from '../../api/requests/LoginRequest';
-import {UserService} from '../../api/service/user.service';
-import {Util} from '../../providers/util';
-import {LoginResponse} from '../../api/responses/LoginResponse';
+import {LoginRequest} from '../../../api/requests/LoginRequest';
+import {UserService} from '../../../api/service/user.service';
+import {Util} from '../../../providers/util';
+import {LoginResponse} from '../../../api/responses/LoginResponse';
 
 @Component({
   selector: 'app-crear',
