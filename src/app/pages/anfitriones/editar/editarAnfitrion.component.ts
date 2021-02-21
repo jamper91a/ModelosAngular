@@ -10,6 +10,8 @@ import {AnfitrionesService} from '../../../api/service/anfitriones.service';
 import {ObtenerPerfilAnfitrionResponse} from '../../../api/responses/anfitriones/ObtenerPerfilAnfitrionResponse';
 import {Paises} from '../../../api/pojo/Paises';
 import {MatTableDataSource} from '@angular/material/table';
+import {ActualizarPaisBloqueadoRequest} from '../../../api/requests/anfitriones/ActualizarPaisBloqueadoRequest';
+import {PaisesService} from '../../../api/service/paises.service';
 
 
 interface PaisesBloqueadoAux {
@@ -29,7 +31,8 @@ export class EditarAnfitrionComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(
     public usuariosService: UsuariosService,
-    public anfitrionesService: AnfitrionesService
+    public anfitrionesService: AnfitrionesService,
+    private paisesService: PaisesService
   ) { }
   displayedColumns: string[] = ['id', 'nombre', 'bloqueado'];
 
@@ -49,7 +52,7 @@ export class EditarAnfitrionComponent implements OnInit {
   public perfil: ObtenerPerfilAnfitrionResponse = null;
   public actualizarUsuarioRequest: ActualizarUsuarioRequest = new ActualizarUsuarioRequest();
   public actualizarAnfitrionRequest: ActualizaAnfitrionRequest = new ActualizaAnfitrionRequest();
-
+  public requestPaises: PaisesResponse = null;
   async ngOnInit() {
     await this.getData();
   }
@@ -75,12 +78,11 @@ export class EditarAnfitrionComponent implements OnInit {
     }
   }
 
-  paisCambio(toggle, pais){
-    if(toggle.checked){
-      console.log(pais);
-    } else{
-      console.log(pais + 'banned');
-    }
+  async paisCambio(toggle, pais){
+    const request:ActualizarPaisBloqueadoRequest = new ActualizarPaisBloqueadoRequest();
+    request.bloqueado= toggle.checked;
+    request.pais = pais;
+    await this.anfitrionesService.actualizarPaisBloqueado(request);
   }
   dataSource = new MatTableDataSource<PaisesBloqueadoAux>(ELEMENT_DATA);
   async getData(){
@@ -88,12 +90,20 @@ export class EditarAnfitrionComponent implements OnInit {
     this.usuarioForm.controls['nombre'].setValue(this.perfil.anfitrion.Usuario.nombre);
     this.usuarioForm.controls['email'].setValue(this.perfil.anfitrion.Usuario.email);
     this.anfitrionForm.controls['perfil'].setValue(this.perfil.anfitrion.perfil);
-    for(let paisBloqueado of this.perfil.anfitrion.PaisesBloqueados){
-      console.log(paisBloqueado);
-      const pais: Paises = paisBloqueado.Paise;
-      ELEMENT_DATA.push({id: pais.id, nombre: pais.nombre, bloqueado: true});
+    this.requestPaises = await this.paisesService.obtenerPaises();
+    for(let pais of this.requestPaises.paises){
+      const aux = {id: pais.id, nombre: pais.nombre, bloqueado: false};
+      for(let paisBloqueado of this.perfil.anfitrion.PaisesBloqueados){
+        if(paisBloqueado.Paise.id === pais.id){
+          aux.bloqueado = true;
+        }
+      }
+      ELEMENT_DATA.push(aux);
     }
+
     this.dataSource.data = ELEMENT_DATA;
+    //Obtener paises
+
   }
 
 }

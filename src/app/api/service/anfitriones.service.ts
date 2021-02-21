@@ -5,6 +5,7 @@ import {CrearAnfitrionRequest} from '../requests/anfitriones/CrearAnfitrionReque
 import {ObtenerAnfitrionesPorPaisRequest} from '../requests/anfitriones/ObtenerAnfitrionesPorPaisRequest';
 import {ActualizaAnfitrionRequest} from '../requests/anfitriones/ActualizaAnfitrionRequest';
 import {ObtenerPerfilAnfitrionResponse} from '../responses/anfitriones/ObtenerPerfilAnfitrionResponse';
+import {ActualizarPaisBloqueadoRequest} from '../requests/anfitriones/ActualizarPaisBloqueadoRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,15 @@ export class AnfitrionesService {
     } catch (e) {
       // await dialog.close();
       // self.util.showToast('Email / password does not match');
+      throw e;
+    }
+  }
+  public async actualizarPaisBloqueado(request: ActualizarPaisBloqueadoRequest): Promise<Boolean> {
+    const self = this;
+    try {
+      await this.api.post(this.baseUrl+'/actualizar-pais-bloqueado', request.getBody()).toPromise();
+      return true;
+    } catch (e) {
       throw e;
     }
   }
