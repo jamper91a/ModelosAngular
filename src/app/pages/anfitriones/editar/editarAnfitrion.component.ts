@@ -7,26 +7,17 @@ import {UsuariosService} from '../../../api/service/usuarios.service';
 import {ActualizarUsuarioRequest} from '../../../api/requests/usuarios/ActualizarUsuarioRequest';
 import {ActualizaAnfitrionRequest} from '../../../api/requests/anfitriones/ActualizaAnfitrionRequest';
 import {AnfitrionesService} from '../../../api/service/anfitriones.service';
+import {ObtenerPerfilAnfitrionResponse} from '../../../api/responses/anfitriones/ObtenerPerfilAnfitrionResponse';
+import {Paises} from '../../../api/pojo/Paises';
+import {MatTableDataSource} from '@angular/material/table';
 
 
-export interface PeriodicElement {
-  id: number;
-  nombre: string;
-  prohibido: boolean;
+interface PaisesBloqueadoAux {
+  id: number,
+  nombre: string,
+  bloqueado: boolean
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1,  nombre: 'Hydrogen', prohibido: true},
-  {id: 2,  nombre: 'Helium', prohibido: true},
-  {id: 3,  nombre: 'Lithium', prohibido: true},
-  {id: 4,  nombre: 'Beryllium', prohibido: true},
-  {id: 5,  nombre: 'Boron', prohibido: true},
-  {id: 6,  nombre: 'Carbon', prohibido: true},
-  {id: 7,  nombre: 'Nitrogen', prohibido: true},
-  {id: 8,  nombre: 'Oxygen', prohibido: true},
-  {id: 9,  nombre: 'Fluorine', prohibido: true},
-  {id: 10, nombre: 'Neon', prohibido: true}
-];
+const ELEMENT_DATA: PaisesBloqueadoAux[] = []
 
 
 @Component({
@@ -40,13 +31,13 @@ export class EditarAnfitrionComponent implements OnInit {
     public usuariosService: UsuariosService,
     public anfitrionesService: AnfitrionesService
   ) { }
-  displayedColumns: string[] = ['id', 'nombre', 'prohibido'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['id', 'nombre', 'bloqueado'];
+
 
   hide = true;
   usuarioForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
-    email: new FormControl({value: 'jamper91@hotmail.com', disabled: true}, [Validators.required, Validators.email]),
+    email: new FormControl({value: '', disabled: true}, [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.minLength(5)]),
     rpassword: new FormControl('', [Validators.minLength(5)]),
   });
@@ -55,11 +46,12 @@ export class EditarAnfitrionComponent implements OnInit {
     perfil: new FormControl('', [Validators.required])
   });
 
-  public requestPaises: PaisesResponse = null;
+  public perfil: ObtenerPerfilAnfitrionResponse = null;
   public actualizarUsuarioRequest: ActualizarUsuarioRequest = new ActualizarUsuarioRequest();
   public actualizarAnfitrionRequest: ActualizaAnfitrionRequest = new ActualizaAnfitrionRequest();
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.getData();
   }
 
   async onUpdateAccount() {
@@ -90,5 +82,20 @@ export class EditarAnfitrionComponent implements OnInit {
       console.log(pais + 'banned');
     }
   }
+  dataSource = new MatTableDataSource<PaisesBloqueadoAux>(ELEMENT_DATA);
+  async getData(){
+    this.perfil = await this.anfitrionesService.obtenerPerfil();
+    this.usuarioForm.controls['nombre'].setValue(this.perfil.anfitrion.Usuario.nombre);
+    this.usuarioForm.controls['email'].setValue(this.perfil.anfitrion.Usuario.email);
+    this.anfitrionForm.controls['perfil'].setValue(this.perfil.anfitrion.perfil);
+    for(let paisBloqueado of this.perfil.anfitrion.PaisesBloqueados){
+      console.log(paisBloqueado);
+      const pais: Paises = paisBloqueado.Paise;
+      ELEMENT_DATA.push({id: pais.id, nombre: pais.nombre, bloqueado: true});
+    }
+    this.dataSource.data = ELEMENT_DATA;
+  }
 
 }
+
+

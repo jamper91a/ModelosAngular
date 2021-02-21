@@ -129,15 +129,16 @@
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="prohibido">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <ng-container matColumnDef="bloqueado">
+        <th mat-header-cell *matHeaderCellDef> Bloquear </th>
         <td mat-cell *matCellDef="let element">
-          <mat-slide-toggle [checked]="element.prohibido" (change)="paisCambio($event,element.id)"></mat-slide-toggle>
+          <mat-slide-toggle [checked]="element.bloqueado" (change)="paisCambio($event,element.id)"></mat-slide-toggle>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <ng-content></ng-content>
     </table>
 
   </mat-expansion-panel>
