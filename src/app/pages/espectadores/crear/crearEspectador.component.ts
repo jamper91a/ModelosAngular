@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UsuariosService} from '../../../api/service/usuarios.service';
 import {Util} from '../../../providers/util';
 import {LoginResponse} from '../../../api/responses/LoginResponse';
-import {PaisesService} from '../../../api/service/paises.service';
-import {CrearAnfitrionRequest} from '../../../api/requests/anfitriones/CrearAnfitrionRequest';
 import {PaisesResponse} from '../../../api/responses/PaisesResponse';
+import {CrearAnfitrionRequest} from '../../../api/requests/anfitriones/CrearAnfitrionRequest';
 import {AnfitrionesService} from '../../../api/service/anfitriones.service';
+import {PaisesService} from '../../../api/service/paises.service';
+import {EspectadoresService} from '../../../api/service/espectadores.service';
 
 @Component({
-  selector: 'app-crear-anfitrion',
-  templateUrl: './crearAnfitrion.component.html',
-  styleUrls: ['./crearAnfitrion.component.scss']
+  selector: 'app-crear-espectador',
+  templateUrl: './crearEspectador.component.html',
+  styleUrls: ['./crearEspectador.component.scss']
 })
-export class CrearAnfitrionComponent implements OnInit {
+export class CrearEspectadorComponent implements OnInit {
 
   hide = true;
-  registrationForm = new FormGroup({
+  crearEspectadorForm = new FormGroup({
     nombre: new FormControl('Jorge', [Validators.required]),
     email: new FormControl('jamper91@hotmail.com', [Validators.required, Validators.email]),
     password: new FormControl('84945SDSDd', [Validators.required, Validators.minLength(5)]),
@@ -25,7 +27,7 @@ export class CrearAnfitrionComponent implements OnInit {
   public requestPaises: PaisesResponse = null;
   public request: CrearAnfitrionRequest = new CrearAnfitrionRequest();
   constructor(
-    private anfitrionesService: AnfitrionesService,
+    private espectadoresService: EspectadoresService,
     private util: Util,
     private paisesService: PaisesService
   ) { }
@@ -41,21 +43,16 @@ export class CrearAnfitrionComponent implements OnInit {
   }
 
   async onCreate() {
-    this.request.nombre = this.registrationForm.value.nombre;
-    this.request.email = this.registrationForm.value.email;
-    this.request.password = this.registrationForm.value.password;
-    this.request.rpassword = this.registrationForm.value.rpassword;
-    this.request.pais = this.registrationForm.value.pais;
+    this.request.nombre = this.crearEspectadorForm.value.nombre;
+    this.request.email = this.crearEspectadorForm.value.email;
+    this.request.password = this.crearEspectadorForm.value.password;
+    this.request.rpassword = this.crearEspectadorForm.value.rpassword;
+    this.request.pais = this.crearEspectadorForm.value.pais;
     try {
-      let redirectUrl = '';
-      const response: LoginResponse  = await this.anfitrionesService.crearAnfitrion(this.request);
-      // if (response.usuario.group.id === 2) {
-      //   await this.router.navigateByUrl('home');
-      // } else{
-      //   await this.util.showToast('Usuarios no valid');
-      // }
-      console.log(response);
+      await this.espectadoresService.crearEspectador(this.request);
+      alert('Espectador creado');
     } catch (e) {
+      alert('No creado');
       console.error(e);
     }
   }

@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'anfitriones',
     loadChildren: () => import('./pages/anfitriones/anfitriones.module').then(m => m.AnfitrionesModule)
+  },
+  {
+    path: 'espectadores',
+    loadChildren: () => import('./pages/espectadores/espectadores.module').then(m => m.EspectadoresModule)
   }
 ];
 
