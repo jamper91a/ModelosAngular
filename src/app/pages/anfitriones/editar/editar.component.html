@@ -1,0 +1,144 @@
+<p>
+  <mat-toolbar>
+    <span>Mi Perfil</span>
+  </mat-toolbar>
+</p>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Informacion personal
+      </mat-panel-title>
+      <mat-panel-description>
+        Informacion acerca de la cuenta
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="usuarioForm" (ngSubmit)="onUpdateAccount()" autocomplete="off">
+      <mat-card-content align="center">
+        <div class="row">
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input autocomplete="false" matInput placeholder="Tu nombre" formControlName="nombre"/>
+              <button mat-icon-button matSuffix>
+                <mat-icon matSuffix>face</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline" >
+              <mat-label>Email</mat-label>
+              <input  autocomplete="false" matInput placeholder="Correo electronico" formControlName="email"/>
+              <button mat-icon-button matSuffix>
+                <mat-icon matSuffix>alternate_email</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Contrasena</mat-label>
+              <input autocomplete="false" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ocultar contrasena'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Repetir Contrasena</mat-label>
+              <input autocomplete="false" matInput [type]="hide ? 'password' : 'text'" formControlName="rpassword">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ocultar contrasena'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <div class="col-12" align="center">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!usuarioForm.valid">Actualizar</button>
+        </div>
+
+      </mat-card-actions>
+    </form>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Perfil
+      </mat-panel-title>
+      <mat-panel-description>
+        Informacion de tu perfil
+        <mat-icon>date_range</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="anfitrionForm" (ngSubmit)="onUpdateProfile()" autocomplete="off">
+      <mat-card-content align="center">
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field appearance="outline" class="perfil-text-area">
+              <mat-label>Perfil</mat-label>
+              <textarea  autocomplete="false" matInput placeholder="Informacion de tu perfil" formControlName="perfil">
+              </textarea>
+              <button mat-icon-button matSuffix>
+                <mat-icon matSuffix>face</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <div class="col-12" align="center">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!anfitrionForm.valid">Actualizar</button>
+        </div>
+
+      </mat-card-actions>
+    </form>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Paises
+      </mat-panel-title>
+      <mat-panel-description>
+        Lista de Paises Prohibidos
+        <mat-icon>flag</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="prohibido">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle [checked]="element.prohibido" (change)="paisCambio($event,element.id)"></mat-slide-toggle>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </mat-expansion-panel>
+</mat-accordion>

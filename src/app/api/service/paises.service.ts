@@ -1,15 +1,12 @@
-import { Injectable } from '@angular/core';
-import {LoginRequest} from '../requests/LoginRequest';
-import {LoginResponse} from '../responses/LoginResponse';
+import { Injectable } from '@angular/core';;
 import {Api, Util} from '../../providers/providers';
-import {CrearAnfitrionRequest} from '../requests/anfitriones/CrearAnfitrionRequest';
 import {PaisesResponse} from '../responses/PaisesResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaisesService {
-
+  private baseUrl = 'paises'
   constructor(
       private util: Util,
       private api: Api
@@ -22,7 +19,7 @@ export class PaisesService {
     const dialog = await this.util.showDialog('Logging', true);
     try {
       // @ts-ignore
-      const response: PaisesResponse = await this.api.get('paises', {}).toPromise();
+      const response: PaisesResponse = await this.api.get(this.baseUrl, {}).toPromise();
       await dialog.close();
       // @ts-ignore
       return response;

@@ -4,7 +4,7 @@ import {Usuarios} from './Usuarios';
 
 export class Anfitriones extends ModelosPojo {
     public saldo: number;
-    public usuario: Usuarios;
+    public Usuario: Usuarios;
 
 
 

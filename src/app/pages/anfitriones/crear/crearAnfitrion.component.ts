@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest} from '../../../api/requests/LoginRequest';
-import {UserService} from '../../../api/service/user.service';
 import {Util} from '../../../providers/util';
 import {LoginResponse} from '../../../api/responses/LoginResponse';
 import {PaisesService} from '../../../api/service/paises.service';
 import {CrearAnfitrionRequest} from '../../../api/requests/anfitriones/CrearAnfitrionRequest';
-import {Paises} from '../../../api/pojo/Paises';
 import {PaisesResponse} from '../../../api/responses/PaisesResponse';
 import {AnfitrionesService} from '../../../api/service/anfitriones.service';
 

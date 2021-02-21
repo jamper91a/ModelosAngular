@@ -1,4 +1,4 @@
-import {ModelosRequest} from './ModelosRequest';
+import {ModelosRequest} from '../ModelosRequest';
 
 export class LoginRequest implements ModelosRequest {
     public email: string;

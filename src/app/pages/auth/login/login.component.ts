@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest} from '../../../api/requests/LoginRequest';
-import {UserService} from '../../../api/service/user.service';
+import {LoginRequest} from '../../../api/requests/usuarios/LoginRequest';
+import {UsuariosService} from '../../../api/service/usuarios.service';
 import {LoginResponse} from '../../../api/responses/LoginResponse';
 import {Util} from '../../../providers/util';
 @Component({
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   });
   public request: LoginRequest = new LoginRequest();
   constructor(
-    private userService: UserService,
+    private userService: UsuariosService,
     private util: Util,
   ) { }
 
