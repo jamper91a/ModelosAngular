@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
@@ -11,12 +11,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'anfitriones',
-    loadChildren: () => import('./pages/anfitriones/anfitriones.module').then(m => m.AnfitrionesModule)
+    path: 'hosts',
+    loadChildren: () => import('./pages/anfitriones/hosts.module').then(m => m.HostsModule)
   },
   {
-    path: 'espectadores',
-    loadChildren: () => import('./pages/espectadores/espectadores.module').then(m => m.EspectadoresModule)
+    path: 'spectators',
+    loadChildren: () => import('./pages/espectadores/spectators.module').then(m => m.SpectatorsModule)
   }
 ];
 

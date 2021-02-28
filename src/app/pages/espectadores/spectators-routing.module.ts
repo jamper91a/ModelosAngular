@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './home/home.component';
+import {CreateSpectatorComponent} from './create/create-spectator.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent}
+  {path: 'create', component: CreateSpectatorComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PublicRoutingModule { }
+export class SpectatorsRoutingModule { }

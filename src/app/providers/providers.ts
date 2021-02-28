@@ -1,5 +1,5 @@
-import { Api } from './api';
-import { Util } from './util';
+import {Api} from './api';
+import {Util} from './util';
 
 export {
   Api,

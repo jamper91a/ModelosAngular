@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {ObtenerAnfitrionesPorPaisResponse} from '../../../api/responses/anfitriones/ObtenerAnfitrionesPorPaisResponse';
-import {AnfitrionesService} from '../../../api/service/anfitriones.service';
-import {ObtenerAnfitrionesPorPaisRequest} from '../../../api/requests/anfitriones/ObtenerAnfitrionesPorPaisRequest';
+import {Component, OnInit} from '@angular/core';
+import {HostsServices} from '../../../api/service/hosts.services';
+import {HostsByCountryRequest} from '../../../api/requests/hosts/HostsByCountryRequest';
+import {HostsByCountryResponse} from '../../../api/responses/hosts/HostsByCountryResponse';
 
 @Component({
   selector: 'app-home',
@@ -10,18 +10,18 @@ import {ObtenerAnfitrionesPorPaisRequest} from '../../../api/requests/anfitrione
 })
 export class HomeComponent implements OnInit {
 
-  public anfitrionesPorPaisResponse: ObtenerAnfitrionesPorPaisResponse = null;
-  public obtenerAnfitrionesPorPaisRequest: ObtenerAnfitrionesPorPaisRequest = new ObtenerAnfitrionesPorPaisRequest();
-  constructor(public anfitrionesService: AnfitrionesService) { }
+  public hostsByCountryResponse: HostsByCountryResponse = null;
+  public hostsByCountryRequest: HostsByCountryRequest = new HostsByCountryRequest();
+  constructor(public anfitrionesService: HostsServices) { }
 
   async ngOnInit() {
     await this.getData();
   }
 
   async getData(){
-    //Obtener paises
-    this.anfitrionesPorPaisResponse = await this.anfitrionesService.obtenerAnfitrionesPorPais(this.obtenerAnfitrionesPorPaisRequest);
-    console.log(this.anfitrionesPorPaisResponse.anfitriones[0]);
+    //Get hosts
+    this.hostsByCountryResponse = await this.anfitrionesService.hostsBtCountry(this.hostsByCountryRequest);
+    console.log(this.hostsByCountryResponse.hosts[0]);
 
   }
 

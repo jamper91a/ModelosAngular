@@ -25,7 +25,7 @@ export class Api {
                 'Content-Type':  'application/json'
             })
         };
-        const token = Util.getPreference('token');
+        const token = this.util.getPreference('access_token');
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
@@ -39,7 +39,7 @@ export class Api {
                 // 'Content-Type':  'multipart/form-data'
             })
         };
-        const token = Util.getPreference('token');
+        const token = this.util.getPreference('access_token');
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
@@ -54,7 +54,7 @@ export class Api {
                 'Content-Type':  'application/json'
             })
         };
-        const token = Util.getPreference('token');
+        const token = this.util.getPreference('access_token');
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
@@ -83,12 +83,41 @@ export class Api {
                 'Content-Type':  'application/json'
             })
         };
-        const token = Util.getPreference('token');
+        const token = this.util.getPreference('access_token');
         if (token) {
             httpOptions.headers =
                 httpOptions.headers.set('Authorization', 'Bearer ' + token);
         }
         return this.http.patch(this.util.url +  this.util.apiPrefix + endpoint, body, httpOptions);
+    }
+
+    put( endpoint: string, body: any): any {
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+      const token = this.util.getPreference('access_token');
+      if (token) {
+        httpOptions.headers =
+          httpOptions.headers.set('Authorization', 'Bearer ' + token);
+      }
+      return this.http.put(this.util.url + this.util.apiPrefix + endpoint, body, httpOptions);
+    }
+    delete( endpoint: string, body: any): any {
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+      const token = this.util.getPreference('access_token');
+      if (token) {
+        httpOptions.headers =
+          httpOptions.headers.set('Authorization', 'Bearer ' + token);
+      }
+      return this.http.delete(this.util.url + this.util.apiPrefix + endpoint, httpOptions);
     }
 
 }

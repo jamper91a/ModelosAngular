@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest} from '../../../api/requests/usuarios/LoginRequest';
-import {UsuariosService} from '../../../api/service/usuarios.service';
+import {LoginRequest} from '../../../api/requests/users/LoginRequest';
+import {UsersService} from '../../../api/service/users.service';
 import {LoginResponse} from '../../../api/responses/LoginResponse';
 import {Util} from '../../../providers/util';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   });
   public request: LoginRequest = new LoginRequest();
   constructor(
-    private userService: UsuariosService,
+    private userService: UsersService,
     private util: Util,
   ) { }
 
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
       // if (response.usuario.group.id === 2) {
       //   await this.router.navigateByUrl('home');
       // } else{
-      //   await this.util.showToast('Usuarios no valid');
+      //   await this.util.showToast('Users no valid');
       // }
       console.log(response);
     } catch (e) {

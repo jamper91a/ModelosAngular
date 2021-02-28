@@ -28,7 +28,7 @@ export class Util {
     localStorage.setItem(key, value);
   }
 
-    public static getPreference(key): any {
+    public getPreference(key): any {
     return localStorage.getItem(key);
   }
 
@@ -69,19 +69,7 @@ export class Util {
 
   }
 
-  public setLogs(msn: string) {
-      let logs = Util.getPreference(this.constants.logs);
-      logs = logs ? logs + '\n' + msn + ';' : msn + ';';
-      Util.savePreference(this.constants.logs, logs);
-  }
 
-  public clearLogs() {
-      Util.savePreference(this.constants.logs, '');
-  }
-
-  public getLogs() {
-      return Util.getPreference(this.constants.logs);
-  }
 
   public logOut() {
       Util.clearAllData();

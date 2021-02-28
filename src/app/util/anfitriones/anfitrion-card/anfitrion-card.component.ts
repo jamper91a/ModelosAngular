@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Anfitriones} from '../../../api/pojo/Anfitriones';
+import {Hosts} from '../../../api/pojo/Hosts';
 
 @Component({
   selector: 'app-anfitrion-card',
@@ -8,7 +8,7 @@ import {Anfitriones} from '../../../api/pojo/Anfitriones';
 })
 export class AnfitrionCardComponent implements OnInit {
 
-  @Input() anfitrion: Anfitriones
+  @Input() anfitrion: Hosts
   constructor() { }
 
   ngOnInit(): void {
