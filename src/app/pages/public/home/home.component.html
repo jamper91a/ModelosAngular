@@ -1,6 +1,6 @@
 
 <div class="row justify-content-center" *ngIf="hostsByCountryResponse">
   <div class="col-lg-4 col-md-4 col-sm-6 col- col-12" *ngFor="let anfitrion of hostsByCountryResponse.hosts">
-    <app-anfitrion-card [anfitrion]="anfitrion"></app-anfitrion-card>
+    <app-anfitrion-card [host]="anfitrion"></app-anfitrion-card>
   </div>
 </div>

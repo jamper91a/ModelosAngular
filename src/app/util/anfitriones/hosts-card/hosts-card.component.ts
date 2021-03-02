@@ -3,12 +3,12 @@ import {Hosts} from '../../../api/pojo/Hosts';
 
 @Component({
   selector: 'app-anfitrion-card',
-  templateUrl: './anfitrion-card.component.html',
-  styleUrls: ['./anfitrion-card.component.scss']
+  templateUrl: './hosts-card.component.html',
+  styleUrls: ['./hosts-card.component.scss']
 })
-export class AnfitrionCardComponent implements OnInit {
+export class HostsCardComponent implements OnInit {
 
-  @Input() anfitrion: Hosts
+  @Input() host: Hosts
   constructor() { }
 
   ngOnInit(): void {
