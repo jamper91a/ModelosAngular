@@ -1,18 +1,21 @@
 import {Injectable} from '@angular/core';
 import {SocketPublic} from './types/socket-public';
-import {map} from 'rxjs/operators';
+import {AllEmitersService} from '../../services/emmiters/all-emiters.service';
+import {HotsUpdatedDto} from '../../services/emmiters/entities/hots-updated.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketsService {
-  constructor( private socketPublic: SocketPublic) {}
+  constructor(
+    private socketPublic: SocketPublic,
+    private emitersService:AllEmitersService
+    ) {}
 
   public listePubliEvents(){
-    // this.socketPublic.f
-    this.socketPublic.fromEvent("example").subscribe(function(data){
-      console.log("example");
-      console.log(data);
+    const self = this;
+    this.socketPublic.fromEvent("hostUpdated").subscribe(function(data: HotsUpdatedDto){
+      self.emitersService.onHostUpdated(data)
     });
   }
 
