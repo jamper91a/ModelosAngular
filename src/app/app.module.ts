@@ -7,6 +7,9 @@ import {Api, Util} from './providers/providers';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from './material.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {environment} from '../environments/environment';
+import {SocketPublic} from './util/sockets/types/socket-public';
 
 @NgModule({
   declarations: [
@@ -18,13 +21,15 @@ import {ReactiveFormsModule} from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SocketIoModule
   ],
   providers: [
     Api,
     Util,
     HttpClientModule,
     HttpClient,
+    SocketPublic
   ],
   bootstrap: [AppComponent]
 })
