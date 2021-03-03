@@ -10,6 +10,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {environment} from '../environments/environment';
 import {SocketPublic} from './util/sockets/types/socket-public';
+import {UtilModule} from './util/util.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {SocketPublic} from './util/sockets/types/socket-public';
     HttpClientModule,
     MaterialModule,
     ReactiveFormsModule,
-    SocketIoModule
+    SocketIoModule,
+    UtilModule
   ],
   providers: [
     Api,

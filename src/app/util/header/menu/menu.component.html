@@ -1,0 +1,28 @@
+<button mat-icon-button [matMenuTriggerFor]="user ? menuUser: menuNoUser" aria-label="Example icon-button with a menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menuNoUser="matMenu">
+  <button mat-menu-item>
+    <mat-icon>dialpad</mat-icon>
+    <span>Redial</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon>voicemail</mat-icon>
+    <span>Check voice mail</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>notifications_off</mat-icon>
+    <span>Disable alerts</span>
+  </button>
+</mat-menu>
+
+<mat-menu #menuUser="matMenu">
+  <button mat-menu-item disabled>
+    <mat-icon>account_balance</mat-icon>
+    <span>Account balance</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <span>LogOut</span>
+  </button>
+</mat-menu>
