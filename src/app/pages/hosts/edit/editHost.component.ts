@@ -10,7 +10,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {CountriesService} from '../../../api/service/countries.service';
 import {HostsProfileResponse} from '../../../api/responses/hosts/HostsProfileResponse';
 import {BannedCountriesServices} from '../../../api/service/banned-countries.services';
-
+import {ChatsService} from '../../../api/service/chats.service';
+import {Util} from '../../../providers/util';
+import * as OT from '@opentok/client';
+import {CreateChatResponse} from '../../../api/responses/chats/create-chat.response';
 
 interface PaisesBloqueadoAux {
   id: number,
@@ -30,6 +33,7 @@ export class EditHostComponent implements OnInit {
   constructor(
     public usersService: UsersService,
     public hostsService: HostsServices,
+    private chatsService: ChatsService,
     private countriesService: CountriesService,
     private bannedCountriesServices: BannedCountriesServices
   ) { }
@@ -107,6 +111,37 @@ export class EditHostComponent implements OnInit {
 
   }
 
+  async startBroadcasting() {
+    const chat: CreateChatResponse = await this.chatsService.createChat();
+    Util.savePreference('chat', JSON.stringify(chat));
+    this.initializeSession(chat);
+  }
+
+  initializeSession(chat: CreateChatResponse){
+    const self = this;
+    var session = OT.initSession(chat.apiKey, chat.chat.sessionId);
+    var publisher = OT.initPublisher('publisher', {
+      insertMode: 'append',
+      width: '100%',
+      height: '100%'
+    }, this.handleError);
+
+    // Connect to the session
+    session.connect(chat.token, function(error) {
+      // If the connection is successful, publish to the session
+      console.log('Connected to session');
+      if (error) {
+        this.handleError(error);
+      } else {
+        session.publish(publisher, self.handleError);
+      }
+    });
+  }
+  handleError(error) {
+    if (error) {
+      alert(error.message);
+    }
+  }
 }
 
 

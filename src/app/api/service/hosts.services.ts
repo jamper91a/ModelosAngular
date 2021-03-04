@@ -79,4 +79,21 @@ export class HostsServices {
       throw e;
     }
   }
+
+  public async sendMessage(hostId: number, message: string): Promise<boolean> {
+    const self = this;
+    // const dialog = await this.util.showDialog('Logging', true);
+    try {
+      // @ts-ignore
+      const url = this.baseUrl + `/public-chat/${hostId}/send-message`
+      await this.api.post(url, {message}).toPromise();
+      // await dialog.close();
+      // @ts-ignore
+      return response;
+    } catch (e) {
+      // await dialog.close();
+      // self.util.showToast('Email / password does not match');
+      throw e;
+    }
+  }
 }

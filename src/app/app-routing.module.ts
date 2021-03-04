@@ -12,11 +12,11 @@ const routes: Routes = [
   },
   {
     path: 'hosts',
-    loadChildren: () => import('./pages/anfitriones/hosts.module').then(m => m.HostsModule)
+    loadChildren: () => import('./pages/hosts/hosts.module').then(m => m.HostsModule)
   },
   {
     path: 'spectators',
-    loadChildren: () => import('./pages/espectadores/spectators.module').then(m => m.SpectatorsModule)
+    loadChildren: () => import('./pages/spectators/spectators.module').then(m => m.SpectatorsModule)
   }
 ];
 

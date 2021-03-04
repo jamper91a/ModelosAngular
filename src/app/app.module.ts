@@ -11,7 +11,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {environment} from '../environments/environment';
 import {SocketPublic} from './util/sockets/types/socket-public';
 import {UtilModule} from './util/util.module';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +24,8 @@ import {UtilModule} from './util/util.module';
     MaterialModule,
     ReactiveFormsModule,
     SocketIoModule,
-    UtilModule
+    UtilModule,
+    FlexLayoutModule
   ],
   providers: [
     Api,
