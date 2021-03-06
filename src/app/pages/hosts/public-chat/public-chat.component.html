@@ -1,0 +1,27 @@
+<div class="content">
+  <div class="row">
+    <div class="col-6">
+      <div class="video" #video>
+      </div>
+    </div>
+    <div class="col-6">
+      <table #chat style="background-color: white">
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6" align="center">
+      <button mat-raised-button color="primary" type="submit" (click)="createVideoChat()" [disabled]="connected">
+        Create Chat
+      </button>
+      <button mat-raised-button [disabled]="chat===null" color="primary" type="submit" [disabled]="!connected" *ngIf="!connected" (click)="startBroadCast()" layout-margin>
+        Start Broadcast
+      </button>
+      <button mat-raised-button [disabled]="chat===null" color="primary" type="submit"  *ngIf="connected" (click)="startBroadCast()" layout-margin>
+        Stop Broadcast
+      </button>
+    </div>
+    <div class="col-6">
+    </div>
+  </div>
+</div>

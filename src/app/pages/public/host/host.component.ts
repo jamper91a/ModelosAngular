@@ -8,7 +8,7 @@ import {NewPublicMessageDto} from '../../../services/emmiters/entities/new-publi
 import * as OT from '@opentok/client';
 import {CreateChatResponse} from '../../../api/responses/chats/create-chat.response';
 import {ChatsService} from '../../../api/service/chats.service';
-
+import * as Hls from 'hls.js';
 @Component({
   selector: 'app-host',
   templateUrl: './host.component.html',
@@ -30,7 +30,9 @@ export class HostComponent implements OnInit {
       this.id = +params['id'];
       this.joinRoom();
       const chat = await this.chatsService.getChat(this.id);
-      this.initializeSession(chat);
+      // this.initializeSession(chat);
+      // @ts-ignore
+      this.play(chat.chat.broadcast.broadcastUrls.hls);
     });
 
     if (this.emitersService.subsNewMessage === undefined) {
@@ -94,5 +96,28 @@ export class HostComponent implements OnInit {
       alert(error.message);
     }
   }
+
+  play(source) {
+    console.log(source);
+    const video = document.getElementById('video');
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(source);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        // @ts-ignore
+        video.play();
+      });
+    }
+    // @ts-ignore
+    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // @ts-ignore
+      video.src = source;
+      video.addEventListener('loadedmetadata', function () {
+        // @ts-ignore
+        video.play();
+      });
+    }
+  };
 
 }

@@ -39,4 +39,16 @@ export class ChatsService {
       throw e;
     }
   }
+
+  public async broadCast(sessionId: string): Promise<boolean> {
+    const self = this;
+    try {
+      // @ts-ignore
+      await this.api.put(this.baseUrl+ `/broadcast`, {sessionId}).toPromise();
+      return true;
+    } catch (e) {
+      // await dialog.dismiss();
+      throw e;
+    }
+  }
 }

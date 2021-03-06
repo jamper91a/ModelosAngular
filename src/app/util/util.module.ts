@@ -5,6 +5,7 @@ import {MaterialModule} from '../material.module';
 import {HostsCardComponent} from './anfitriones/hosts-card/hosts-card.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './header/menu/menu.component';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -18,9 +19,10 @@ import { MenuComponent } from './header/menu/menu.component';
         HostsCardComponent,
         HeaderComponent
     ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-  ]
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule,
+    ]
 })
 export class UtilModule { }

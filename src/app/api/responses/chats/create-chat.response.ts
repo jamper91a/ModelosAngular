@@ -6,5 +6,5 @@ export class CreateChatResponse extends ModelosResponse {
     public chat: Chats;
     public token: string;
     public apiKey: string;
-    public broadCast: any;
+    public broad: any;
 }

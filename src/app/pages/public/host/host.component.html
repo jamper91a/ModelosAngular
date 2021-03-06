@@ -1,8 +1,13 @@
 <mat-grid-list cols="4" rowHeight="40%">
   <mat-grid-tile colspan="3" rowspan="1"  [style.background]="'lightblue'">
-    <div id="videos">
-      <div id="subscriber"></div>
-      <div id="publisher"></div>
+    <div id="broadcast" style="display:none;" data="<%= broadcast %>"></div>
+    <div id="main" class="main-container">
+      <div id="banner" class="banner">
+        <span id="bannerText" class="text">Waiting for Broadcast to Begin</span>
+      </div>
+      <div id="videoContainer" class="video-container">
+        <video id="video"></video>
+      </div>
     </div>
   </mat-grid-tile>
   <mat-grid-tile colspan="1" rowspan="2" [style.background]="'lightblue'">

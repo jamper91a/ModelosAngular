@@ -26,6 +26,7 @@
     "@angular/router": "~10.2.0",
     "@opentok/client": "^2.19.1",
     "bootstrap": "^4.5.0",
+    "hls.js": "^0.14.17",
     "ngx-socket-io": "^3.2.0",
     "rxjs": "~6.6.0",
     "socket.io-client": "^3.1.2",
