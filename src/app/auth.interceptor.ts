@@ -19,18 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     const self = this;
-    // @ts-ignore
-    // return next.handle(request).pipe(catchError(async error => {
-    //     if (error.status === 401) {
-    //       try {
-    //         return from(this.reAuthenticate(error.error, request, next));
-    //       } catch (e) {
-    //         return throwError(e);
-    //       }
-    //     }
-    //     return throwError(error);
-    //   })
-    // )
     return next.handle(request).pipe(catchError(error => {
         if (error.status === 401) {
             return this.reAuthenticate(error.error)
@@ -43,8 +31,6 @@ export class AuthInterceptor implements HttpInterceptor {
     )
   }
   reAuthenticate(error): Observable<any> {
-    console.log('reAuthenticating');
-    console.log(error);
     if(error.message === 'TokenExpiredError') {
       //Refresh token
       return from(this.usersService.refreshToken())
