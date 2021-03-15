@@ -9,8 +9,10 @@ import {NewPublicMessageDto} from './entities/new-public-message.dto';
 export class AllEmitersService {
   invokeHostUpdated = new EventEmitter();
   invokeNewMessage = new EventEmitter();
+  invokeUserJoinChat = new EventEmitter();
   subsHostUpdated: Subscription;
   subsNewMessage: Subscription;
+  subsUserJoinChat: Subscription;
 
 
 
@@ -24,6 +26,10 @@ export class AllEmitersService {
   onNewPublicMessage(data: NewPublicMessageDto) {
     console.log('onNewPublicMessage');
     this.invokeNewMessage.emit(data);
+  }
+  onUserJoinChat(data: any) {
+    console.log('onUserJoinChat');
+    this.invokeUserJoinChat.emit(data);
   }
 
 

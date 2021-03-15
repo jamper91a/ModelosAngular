@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginRequest} from '../../../api/requests/users/LoginRequest';
-import {UsersService} from '../../../api/service/users.service';
-import {LoginResponse} from '../../../api/responses/LoginResponse';
-import {Util} from '../../../providers/util';
+import {LoginRequest} from '../../../../api/requests/users/LoginRequest';
+import {UsersService} from '../../../../api/service/users.service';
+import {LoginResponse} from '../../../../api/responses/LoginResponse';
+import {Util} from '../../../../providers/util';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +13,8 @@ import {Util} from '../../../providers/util';
 export class LoginComponent implements OnInit {
   hide = true;
   loginForm = new FormGroup({
-    email: new FormControl('jamper91@hotmail.com', [Validators.required, Validators.email]),
-    password: new FormControl('84945SDSDd', [Validators.required, Validators.minLength(5)]),
+    email: new FormControl('spectator1@email.com', [Validators.required, Validators.email]),
+    password: new FormControl('12345', [Validators.required, Validators.minLength(5)]),
   });
   public request: LoginRequest = new LoginRequest();
   constructor(

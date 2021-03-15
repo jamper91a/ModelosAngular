@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Renderer} from '@angular/compiler-cli/ngcc/src/rendering/renderer';
 import {ActivatedRoute} from '@angular/router';
 import {SocketsService} from '../../../util/sockets/sockets-service';
@@ -9,16 +9,17 @@ import * as OT from '@opentok/client';
 import {CreateChatResponse} from '../../../api/responses/chats/create-chat.response';
 import {ChatsService} from '../../../api/service/chats.service';
 import * as Hls from 'hls.js';
+import {SubSink} from 'subsink';
 @Component({
   selector: 'app-host',
   templateUrl: './host.component.html',
   styleUrls: ['./host.component.scss']
 })
-export class HostComponent implements OnInit {
+export class HostComponent implements OnInit, OnDestroy {
   @ViewChild('chatMessages') chatMsgs:ElementRef;
 
   private id: number;
-  private sub: any;
+  private subs = new SubSink();
   constructor(private route: ActivatedRoute,
               private socketsService:SocketsService,
               private chatsService: ChatsService,
@@ -26,21 +27,30 @@ export class HostComponent implements OnInit {
 
   ngOnInit(): void {
     const self = this;
-    this.sub = this.route.params.subscribe(async (params) => {
+    this.subs.sink = this.route.params.subscribe(async (params) => {
       this.id = +params['id'];
-      this.joinRoom();
+
       const chat = await this.chatsService.getChat(this.id);
+      this.joinRoom(chat.chat.sessionId);
       // this.initializeSession(chat);
       // @ts-ignore
-      this.play(chat.chat.broadcast.broadcastUrls.hls);
+      // this.play(chat.chat.broadcast.broadcastUrls.hls);
     });
 
     if (this.emitersService.subsNewMessage === undefined) {
       this.emitersService.subsNewMessage =
-        this.emitersService.invokeNewMessage.subscribe((data: NewPublicMessageDto) => {
+        this.subs.sink = this.emitersService.invokeNewMessage.subscribe((data: NewPublicMessageDto) => {
           if (self.id == data.id) {
             self.addMessage(data.message);
           }
+        });
+    }
+    if (this.emitersService.subsUserJoinChat === undefined) {
+      this.emitersService.subsUserJoinChat =
+        this.subs.sink =  this.emitersService.invokeUserJoinChat.subscribe((data: any) => {
+          console.log('Host - user joined');
+          console.log(data);
+
         });
     }
   }
@@ -55,8 +65,8 @@ export class HostComponent implements OnInit {
 
   }
 
-  private joinRoom(){
-    const roomName = `public-chat/${this.id}`;
+  private joinRoom(session){
+    const roomName = `public-chat/${session}`;
     this.socketsService.joinRoom(roomName);
   }
 
@@ -119,5 +129,9 @@ export class HostComponent implements OnInit {
       });
     }
   };
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
 }

@@ -88,6 +88,8 @@ export class EditHostComponent implements OnInit {
   dataSource = new MatTableDataSource<PaisesBloqueadoAux>(ELEMENT_DATA);
   async getData(){
     this.hostsProfileResponse = await this.hostsService.profileHost(this.usersService.getUser().host.id);
+    console.log('this.hostsProfileResponse');
+    console.log(this.hostsProfileResponse);
     this.userForm.controls['name'].setValue(this.hostsProfileResponse.host.user.name);
     this.userForm.controls['email'].setValue(this.hostsProfileResponse.host.user.email);
     this.hostsForm.controls['profile'].setValue(this.hostsProfileResponse.host.profile);

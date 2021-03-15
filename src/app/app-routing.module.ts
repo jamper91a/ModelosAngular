@@ -7,8 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/public/public.module').then(m => m.PublicModule)
   },
   {
-    path: 'auth',
-    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+    path: '',
+    loadChildren: () => import('./pages/public/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'hosts',

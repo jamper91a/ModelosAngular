@@ -10,6 +10,6 @@ export class AppComponent {
   title = 'modelosFrontEnd';
   constructor(public socketsService: SocketsService) {
     console.log('AppComponent');
-    this.socketsService.listePubliEvents();
+    this.socketsService.listenToPublicEvents();
   }
 }

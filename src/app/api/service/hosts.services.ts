@@ -72,8 +72,10 @@ export class HostsServices {
         await this.api.get(this.baseUrl+'/profile/'+hostId, {}).toPromise();
       // await dialog.close();
       // @ts-ignore
+      console.log('profileHost response', response);
       return response;
     } catch (e) {
+      console.log('profileHost', e);
       // await dialog.close();
       // self.util.showToast('Email / password does not match');
       throw e;

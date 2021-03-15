@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Hosts} from '../../../api/pojo/Hosts';
 import {AllEmitersService} from '../../../services/emmiters/all-emiters.service';
 import {HotsUpdatedDto} from '../../../services/emmiters/entities/hots-updated.dto';
+import {Router} from '@angular/router';
+import {host} from '@angular-devkit/build-angular/src/test-utils';
 
 @Component({
   selector: 'app-anfitrion-card',
@@ -13,6 +15,7 @@ export class HostsCardComponent implements OnInit {
   @Input() host: Hosts
   constructor(
     private emitersService: AllEmitersService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -28,4 +31,7 @@ export class HostsCardComponent implements OnInit {
     }
   }
 
+  goToHost() {
+    this.router.navigateByUrl('host/'+ this.host.id)
+  }
 }

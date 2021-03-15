@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   url: 'http://localhost:3000/',
   socketWeb: 'http://localhost:3100/web',
-  socketUser: 'http://localhost:3100/user',
+  socketUser: 'http://localhost:3100/users',
   apiPrefix: ''
 };
 

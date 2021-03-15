@@ -23,27 +23,29 @@ export class Api {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json'
-            })
+            }),
+            withCredentials: true
         };
-        const token = this.util.getPreference('access_token');
-        if (token) {
-            httpOptions.headers =
-                httpOptions.headers.set('Authorization', 'Bearer ' + token);
-        }
-        return this.http.post(this.util.url + this.util.apiPrefix + endpoint, body, httpOptions);
+        // const token = this.util.getPreference('access_token');
+        // if (token) {
+        //     httpOptions.headers =
+        //         httpOptions.headers.set('Authorization', 'Bearer ' + token);
+        // }
+      return this.http.post(this.util.url + this.util.apiPrefix + endpoint, body, httpOptions).pipe();
     }
     postWithFiles( endpoint: string, body: FormData): any {
 
         const httpOptions = {
             headers: new HttpHeaders({
                 // 'Content-Type':  'multipart/form-data'
-            })
+            }),
+          withCredentials: true
         };
         const token = this.util.getPreference('access_token');
-        if (token) {
-            httpOptions.headers =
-                httpOptions.headers.set('Authorization', 'Bearer ' + token);
-        }
+        // if (token) {
+        //     httpOptions.headers =
+        //         httpOptions.headers.set('Authorization', 'Bearer ' + token);
+        // }
         return this.http.post(this.util.url +  this.util.apiPrefix + endpoint, body, httpOptions);
     }
 
@@ -52,13 +54,14 @@ export class Api {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json'
-            })
+            }),
+          withCredentials: true
         };
         const token = this.util.getPreference('access_token');
-        if (token) {
-            httpOptions.headers =
-                httpOptions.headers.set('Authorization', 'Bearer ' + token);
-        }
+        // if (token) {
+        //     httpOptions.headers =
+        //         httpOptions.headers.set('Authorization', 'Bearer ' + token);
+        // }
 
         //
         // // Support easy query params for GET requests
@@ -73,7 +76,6 @@ export class Api {
                 fields = '';
             }
         }
-        console.log(this.util.url + endpoint + fields);
         return this.http.get(this.util.url +  this.util.apiPrefix + endpoint + fields, httpOptions);
     }
 
@@ -81,13 +83,14 @@ export class Api {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json'
-            })
+            }),
+          withCredentials: true
         };
-        const token = this.util.getPreference('access_token');
-        if (token) {
-            httpOptions.headers =
-                httpOptions.headers.set('Authorization', 'Bearer ' + token);
-        }
+        // const token = this.util.getPreference('access_token');
+        // if (token) {
+        //     httpOptions.headers =
+        //         httpOptions.headers.set('Authorization', 'Bearer ' + token);
+        // }
         return this.http.patch(this.util.url +  this.util.apiPrefix + endpoint, body, httpOptions);
     }
 
@@ -96,13 +99,14 @@ export class Api {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json'
-        })
+        }),
+        withCredentials: true
       };
-      const token = this.util.getPreference('access_token');
-      if (token) {
-        httpOptions.headers =
-          httpOptions.headers.set('Authorization', 'Bearer ' + token);
-      }
+      // const token = this.util.getPreference('access_token');
+      // if (token) {
+      //   httpOptions.headers =
+      //     httpOptions.headers.set('Authorization', 'Bearer ' + token);
+      // }
       return this.http.put(this.util.url + this.util.apiPrefix + endpoint, body, httpOptions);
     }
     delete( endpoint: string, body: any): any {
@@ -110,13 +114,14 @@ export class Api {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json'
-        })
+        }),
+        withCredentials: true
       };
-      const token = this.util.getPreference('access_token');
-      if (token) {
-        httpOptions.headers =
-          httpOptions.headers.set('Authorization', 'Bearer ' + token);
-      }
+      // const token = this.util.getPreference('access_token');
+      // if (token) {
+      //   httpOptions.headers =
+      //     httpOptions.headers.set('Authorization', 'Bearer ' + token);
+      // }
       return this.http.delete(this.util.url + this.util.apiPrefix + endpoint, httpOptions);
     }
 

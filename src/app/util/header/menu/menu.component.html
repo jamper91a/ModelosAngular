@@ -1,14 +1,22 @@
-<a [routerLink]="'/hosts/edit'" mat-icon-button  aria-label="Example icon-button with a menu">
-  <mat-icon>account_circle</mat-icon>
-</a>
-<button mat-icon-button *ngIf="user.host" [matMenuTriggerFor]="menuHost" aria-label="Example icon-button with a menu">
-  <mat-icon>chat</mat-icon>
-</button>
-<button mat-icon-button [matMenuTriggerFor]="user.host ? menuUser: menuNoUser" aria-label="Example icon-button with a menu">
-  <mat-icon>more_vert</mat-icon>
-</button>
+<ng-container *ngIf="user && user.host">
+  <a [routerLink]="'/hosts/edit'" mat-icon-button aria-label="Example icon-button with a menu">
+    <mat-icon>account_circle</mat-icon>
+  </a>
+  <a [routerLink]="'/hosts/public-chat'" mat-icon-button aria-label="Example icon-button with a menu">
+    <mat-icon>chat</mat-icon>
+  </a>
+  <button mat-icon-button [matMenuTriggerFor]="menuHost"
+          aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</ng-container>
 
+<ng-container *ngIf="user && user.spectator">
 
+</ng-container>
+<ng-container *ngIf="!user">
+
+</ng-container>
 
 <mat-menu #menuNoUser="matMenu">
   <button mat-menu-item>
@@ -24,20 +32,14 @@
     <span>Disable alerts</span>
   </button>
 </mat-menu>
-<mat-menu #menuUser="matMenu">
+<mat-menu #menuHost="matMenu">
   <button mat-menu-item disabled>
     <mat-icon>account_balance</mat-icon>
     <span>Account balance</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="logOut()">
     <mat-icon>logout</mat-icon>
     <span>LogOut</span>
   </button>
 </mat-menu>
 
-<mat-menu #menuHost="matMenu">
-  <a [routerLink]="'/hosts/public-chat'" mat-menu-item >
-    <mat-icon>chat</mat-icon>
-    <span>Public Chat</span>
-  </a>
-</mat-menu>

@@ -10,6 +10,7 @@ import {UpdateUsersRequest} from '../requests/users/UpdateUsersRequest';
 export class UsersService {
   private baseUrl = 'users';
   private user: AuthUser = null;
+  private access_token: string = '';
   constructor(
       private util: Util,
       private api: Api
@@ -33,6 +34,33 @@ export class UsersService {
       throw e;
     }
   }
+
+  public async refreshToken(): Promise<boolean> {
+    const self = this;
+    try {
+      // @ts-ignore
+      const response = await this.api.get('auth/refresh', {}).toPromise();
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async logOut(): Promise<LoginResponse> {
+    const self = this;
+    try {
+      // @ts-ignore
+      const response: LoginResponse = await this.api.get('auth/logout', {}).toPromise();
+      // await dialog.dismiss();
+      if (response) {
+        Util.clearAllData();
+      }
+      // @ts-ignore
+      return response;
+    } catch (e) {
+      throw e;
+    }
+  }
   public async updateUser(userId: number, request: UpdateUsersRequest): Promise<Boolean> {
     const self = this;
     try {
@@ -49,8 +77,14 @@ export class UsersService {
     if(this.user === null) {
       this.user = JSON.parse(this.util.getPreference('user'));
     }
-
     return this.user;
+
+  }
+  public getToken(): string{
+    if(!this.access_token) {
+      this.access_token = this.util.getPreference('access_token');
+    }
+    return this.access_token;
 
   }
 }
