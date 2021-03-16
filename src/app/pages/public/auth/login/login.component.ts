@@ -4,6 +4,8 @@ import {LoginRequest} from '../../../../api/requests/users/LoginRequest';
 import {UsersService} from '../../../../api/service/users.service';
 import {LoginResponse} from '../../../../api/responses/LoginResponse';
 import {Util} from '../../../../providers/util';
+import {Router} from '@angular/router';
+import {SocketsService} from '../../../../util/sockets/sockets-service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private util: Util,
+    private router: Router,
+    private socketsService: SocketsService
   ) { }
 
   ngOnInit(): void {
@@ -31,12 +35,13 @@ export class LoginComponent implements OnInit {
     try {
       let redirectUrl = '';
       const response: LoginResponse  = await this.userService.login(this.request);
-      // if (response.usuario.group.id === 2) {
-      //   await this.router.navigateByUrl('home');
-      // } else{
-      //   await this.util.showToast('Users no valid');
-      // }
-      console.log(response);
+      //Connect to user socket
+      this.socketsService.connectSocketUser();
+      if (response.user.spectator) {
+        await this.router.navigateByUrl('/');
+      } else if (response.user.host) {
+        await this.router.navigateByUrl('/hosts/edit');
+      }
     } catch (e) {
       console.error(e);
     }

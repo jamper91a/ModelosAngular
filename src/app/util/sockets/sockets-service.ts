@@ -5,6 +5,7 @@ import {HotsUpdatedDto} from '../../services/emmiters/entities/hots-updated.dto'
 import {UsersService} from '../../api/service/users.service';
 import {Socket, SocketIoConfig} from 'ngx-socket-io';
 import {environment} from '../../../environments/environment';
+import {NewChatDto} from '../../services/emmiters/entities/new-chat.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +24,19 @@ export class SocketsService {
 
   }
 
-  public listenToPublicEvents(){
+  public listenToPublicEvents() {
     const self = this;
     //Event sent from BackEnd through Socket.io server
-    this.socketPublic.fromEvent("hostUpdated").subscribe(function(data: HotsUpdatedDto){
+    this.socketPublic.fromEvent("hostUpdated").subscribe(function(data: HotsUpdatedDto) {
       self.emitersService.onHostUpdated(data)
     });
-
+    //Event sent from BackEnd through Socket.io server
+    this.socketPublic.fromEvent('new-chat').subscribe(function(data: NewChatDto) {
+      self.emitersService.onNewChat(data);
+    });
   }
+
+
 
   public listenToUserEvents(){
     const self = this;
@@ -43,6 +49,7 @@ export class SocketsService {
       console.log('socket: user-joined', data);
       self.emitersService.onUserJoinChat(data);
     });
+
   }
 
   public connectSocketUser(){
@@ -56,7 +63,6 @@ export class SocketsService {
           }
         }
       };
-      console.log(cfg);
       this.socketUser = new Socket(cfg);
       this.socketUser.connect();
       this.listenToUserEvents();
@@ -64,13 +70,17 @@ export class SocketsService {
 
   }
 
+  /**
+   * Join to an specific room
+   * @param room
+   */
   public joinRoom(room: string){
     //User
     const user = this.usersService.getUser();
-    this.socketPublic.emit('joinRoom', {
+    this.socketUser.emit('joinRoom', {
       room,
       data:{
-        id: user.id,
+        userId: user.id,
         name: user.name,
         country: user.country
       }

@@ -10,6 +10,7 @@ import {CreateChatResponse} from '../../../api/responses/chats/create-chat.respo
 import {ChatsService} from '../../../api/service/chats.service';
 import * as Hls from 'hls.js';
 import {SubSink} from 'subsink';
+import {NewChatDto} from '../../../services/emmiters/entities/new-chat.dto';
 @Component({
   selector: 'app-host',
   templateUrl: './host.component.html',
@@ -49,6 +50,14 @@ export class HostComponent implements OnInit, OnDestroy {
       this.emitersService.subsUserJoinChat =
         this.subs.sink =  this.emitersService.invokeUserJoinChat.subscribe((data: any) => {
           console.log('Host - user joined');
+          console.log(data);
+
+        });
+    }
+    if (this.emitersService.subsNewChat === undefined) {
+      this.emitersService.subsNewChat =
+        this.subs.sink =  this.emitersService.invokeNewChat.subscribe((data: NewChatDto) => {
+          console.log('NewChat created');
           console.log(data);
 
         });

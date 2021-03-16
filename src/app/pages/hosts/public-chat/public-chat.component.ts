@@ -55,12 +55,12 @@ export class PublicChatComponent implements OnInit, OnDestroy {
     this.chat = await this.chatsService.createChat();
     Util.savePreference('chat', JSON.stringify(this.chat));
     this.joinRoom(this.chat.chat.sessionId);
-    this.initializeSession(this.chat);
+    // this.initializeSession(this.chat);
   }
 
     private joinRoom(session: string){
       const roomName = `public-chat/${session}`;
-      this.socketsService.joinRoom(roomName);
+      // this.socketsService.joinRoom(roomName);
     }
 
   async startBroadCast(){
