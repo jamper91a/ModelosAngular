@@ -1,45 +1,42 @@
-<mat-grid-list cols="4" rowHeight="40%">
-  <mat-grid-tile colspan="3" rowspan="1"  [style.background]="'lightblue'">
-    <div id="broadcast" style="display:none;" data="<%= broadcast %>"></div>
-    <div id="main" class="main-container">
-      <div id="banner" class="banner">
-        <span id="bannerText" class="text">Waiting for Broadcast to Begin</span>
-      </div>
-      <div id="videoContainer" class="video-container">
-        <video id="video"></video>
+<div class="content">
+  <div class="row">
+    <div class="col-6">
+      <div class="video" #video>
       </div>
     </div>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="2" [style.background]="'lightblue'">
-    <div class="container" style="height: 100%">
-      <div class="row" style="max-height: 90%; overflow: scroll">
-        <div class="col-12">
-          <table #chatMessages style="background-color: white">
-            <tr><td>a</td></tr>
-            <tr><td>a</td></tr>
-            <tr><td>a</td></tr>
-            <tr><td>a</td></tr>
-            <tr><td>a</td></tr>
-          </table>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <input type="text" placeholder="Your message" />
-        </div>
-      </div>
+    <div class="col-6">
+      <table style="background-color: white">
+        <tr *ngFor="let message of messages">
+          <td>{{message.data.message}} by {{message.data.name}}</td>
+        </tr>
+      </table>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-6" align="center">
 
+    </div>
+    <div class="col-6" [hidden]="chat === null">
+      <form [formGroup]="messageForm" (ngSubmit)="onSendMessage()" autocomplete="off">
+        <mat-card-content align="center">
+          <div class="row">
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="perfil-text-area">
+                <mat-label>Message to sent</mat-label>
+                <textarea  autocomplete="false" matInput placeholder="Text to be shown on your profile" formControlName="message">
+              </textarea>
+              </mat-form-field>
+            </div>
+          </div>
 
+        </mat-card-content>
+        <mat-card-actions align="center">
+          <div class="col-12" align="center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="!messageForm.valid">Send</button>
+          </div>
 
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="1" [style.background]="'lightpink'">
-
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2" rowspan="1" [style.background]="'#DDBDF1'">
-
-  </mat-grid-tile>
-</mat-grid-list>
-
-<!--<div fxLayout="row" fxLayoutAlign="space-around stretch" style="background-color: #ddbdf1">-->
-<!--</div>-->
+        </mat-card-actions>
+      </form>
+    </div>
+  </div>
+</div>

@@ -7,7 +7,6 @@ import {map} from 'rxjs/operators';
 export class SocketPublic extends Socket {
 
   constructor() {
-    console.log('SocketPublic');
     super({ url: environment.socketWeb, options: {
         withCredentials: false
       } });

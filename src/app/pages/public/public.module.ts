@@ -6,6 +6,7 @@ import {HomeComponent} from './home/home.component';
 import {UtilModule} from '../../util/util.module';
 import { HostComponent } from './host/host.component';
 import {MaterialModule} from '../../material.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {MaterialModule} from '../../material.module';
     CommonModule,
     PublicRoutingModule,
     UtilModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class PublicModule { }

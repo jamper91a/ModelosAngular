@@ -8,12 +8,14 @@ import {
 import {from, Observable, throwError} from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import {UsersService} from './api/service/users.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    public usersService: UsersService
+    public usersService: UsersService,
+    public router: Router
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -36,10 +38,10 @@ export class AuthInterceptor implements HttpInterceptor {
       return from(this.usersService.refreshToken())
         .pipe(catchError(async err => {
           await this.usersService.logOut();
-          throw 'Token could not be refresh'
+          await this.router.navigateByUrl('/login');
         }));
     } else{
-      throw 'Token could not be refresh'
+      this.router.navigateByUrl('/login');
     }
   }
 

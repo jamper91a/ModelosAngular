@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {HotsUpdatedDto} from './entities/hots-updated.dto';
 import {NewPublicMessageDto} from './entities/new-public-message.dto';
 import {NewChatDto} from './entities/new-chat.dto';
+import {NewMessageDto} from '../../util/sockets/dto/new-message.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class AllEmitersService {
     console.log('onHostUpdated');
     this.invokeHostUpdated.emit(data);
   }
-  onNewPublicMessage(data: NewPublicMessageDto) {
+  onNewPublicMessage(data: NewMessageDto) {
     console.log('onNewPublicMessage');
     this.invokeNewMessage.emit(data);
   }

@@ -11,6 +11,9 @@ import {ChatsService} from '../../../api/service/chats.service';
 import * as Hls from 'hls.js';
 import {SubSink} from 'subsink';
 import {NewChatDto} from '../../../services/emmiters/entities/new-chat.dto';
+import {NewMessageDto} from '../../../util/sockets/dto/new-message.dto';
+import {Chats} from '../../../api/pojo/Chats';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-host',
   templateUrl: './host.component.html',
@@ -21,6 +24,13 @@ export class HostComponent implements OnInit, OnDestroy {
 
   private id: number;
   private subs = new SubSink();
+  private chat: CreateChatResponse
+
+  public messages: NewMessageDto[] = [];
+
+  messageForm = new FormGroup({
+    message: new FormControl('', [Validators.required])
+  });
   constructor(private route: ActivatedRoute,
               private socketsService:SocketsService,
               private chatsService: ChatsService,
@@ -31,8 +41,8 @@ export class HostComponent implements OnInit, OnDestroy {
     this.subs.sink = this.route.params.subscribe(async (params) => {
       this.id = +params['id'];
 
-      const chat = await this.chatsService.getChat(this.id);
-      this.joinRoom(chat.chat.sessionId);
+      this.chat = await this.chatsService.getChat(this.id);
+      this.joinRoom(this.chat.chat.sessionId);
       // this.initializeSession(chat);
       // @ts-ignore
       // this.play(chat.chat.broadcast.broadcastUrls.hls);
@@ -40,10 +50,8 @@ export class HostComponent implements OnInit, OnDestroy {
 
     if (this.emitersService.subsNewMessage === undefined) {
       this.emitersService.subsNewMessage =
-        this.subs.sink = this.emitersService.invokeNewMessage.subscribe((data: NewPublicMessageDto) => {
-          if (self.id == data.id) {
-            self.addMessage(data.message);
-          }
+        this.subs.sink = this.emitersService.invokeNewMessage.subscribe((data: NewMessageDto) => {
+          self.messages.push(data);
         });
     }
     if (this.emitersService.subsUserJoinChat === undefined) {
@@ -75,8 +83,7 @@ export class HostComponent implements OnInit, OnDestroy {
   }
 
   private joinRoom(session){
-    const roomName = `public-chat/${session}`;
-    this.socketsService.joinRoom(roomName);
+    this.socketsService.jointToChat(session);
   }
 
   initializeSession(chat: CreateChatResponse){
@@ -141,6 +148,15 @@ export class HostComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
+  }
+
+  onSendMessage(){
+    const message = this.messageForm.value.message;
+    try {
+      this.socketsService.sendMessageToPublicRoom(this.chat.chat.sessionId, message);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
 }
