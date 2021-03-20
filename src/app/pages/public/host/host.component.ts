@@ -24,7 +24,7 @@ export class HostComponent implements OnInit, OnDestroy {
 
   private id: number;
   private subs = new SubSink();
-  private chat: CreateChatResponse
+  public chat: CreateChatResponse
 
   public messages: NewMessageDto[] = [];
 
