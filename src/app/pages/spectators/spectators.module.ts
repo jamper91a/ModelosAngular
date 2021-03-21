@@ -6,10 +6,17 @@ import {CreateSpectatorComponent} from './create/create-spectator.component';
 import {MaterialModule} from '../../material.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {EditarEspectadorComponent} from './edit/editar-espectador.component';
+import {loadStripe} from '@stripe/stripe-js';
+import {environment} from '../../../environments/environment';
+import {CreditCardComponent} from './credit-card/credit-card.component';
 
 
 @NgModule({
-  declarations: [CreateSpectatorComponent, EditarEspectadorComponent],
+  declarations: [
+    CreateSpectatorComponent,
+    EditarEspectadorComponent,
+    CreditCardComponent
+  ],
   imports: [
     CommonModule,
     SpectatorsRoutingModule,

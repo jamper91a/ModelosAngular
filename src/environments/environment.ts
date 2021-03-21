@@ -7,7 +7,10 @@ export const environment = {
   url: 'http://localhost:3000/',
   socketWeb: 'http://localhost:3100/web',
   socketUser: 'http://localhost:3100/users',
-  apiPrefix: ''
+  apiPrefix: '',
+  stripe: {
+    publicKey: 'pk_test_jL5O5x8MhXW1TJuhoNxY3TLu00VhZo5Awb'
+  }
 };
 
 /*

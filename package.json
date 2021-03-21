@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~10.2.0",
     "@angular/router": "~10.2.0",
     "@opentok/client": "^2.19.1",
+    "@stripe/stripe-js": "^1.13.1",
     "bootstrap": "^4.5.0",
     "hls.js": "^0.14.17",
     "ngx-socket-io": "^3.2.0",

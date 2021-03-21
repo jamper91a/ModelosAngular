@@ -28,7 +28,8 @@ import {AuthInterceptor} from './auth.interceptor';
     ReactiveFormsModule,
     SocketIoModule,
     UtilModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+
   ],
   providers: [
     Api,
